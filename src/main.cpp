@@ -4,6 +4,7 @@
 #include <iomanip>
 using namespace std;
 
+// represents a 2D point with x,y coordinates
 struct Point {
     double x, y;
 };
@@ -38,12 +39,14 @@ void kochCurve(ofstream &linesFile, Point p1, Point p5, int levels) {
     p3.x = p2.x + (vx * cos(angle) - vy * sin(angle));
     p3.y = p2.y + (vx * sin(angle) + vy * cos(angle));
 
+    // recursive calls for each sub-segment
     kochCurve(linesFile, p1, p2, levels - 1);
     kochCurve(linesFile, p2, p3, levels - 1);
     kochCurve(linesFile, p3, p4, levels - 1);
     kochCurve(linesFile, p4, p5, levels - 1);
 }
 
+// recursive helper for Hilbert curve drawing
 void hilbert(ofstream &linesFile, double x, double y,
              double xi, double xj, double yi, double yj,
              int n, Point &prev, bool &first) {
@@ -68,6 +71,8 @@ void hilbertCurve(ofstream &linesFile, Point a, Point b, int levels) {
     bool first = true;
     hilbert(linesFile, a.x, a.y, size, 0, 0, size, levels, prev, first);
 }
+
+// recursive function to generate Sierpinski triangle
 
 void sierpinski(ofstream &linesFile, Point a, Point b, Point c, int levels) {
     if (levels == 0) {
