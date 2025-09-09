@@ -44,28 +44,29 @@ void kochCurve(ofstream &linesFile, Point p1, Point p5, int levels) {
     kochCurve(linesFile, p4, p5, levels - 1);
 }
 
-void hilbert(ofstream &linesFile, double x, double y, double xi, double xj, double yi, double yj, int n) {
+void hilbert(ofstream &linesFile, double x, double y,
+             double xi, double xj, double yi, double yj,
+             int n, Point &prev, bool &first) {
     if (n <= 0) {
         Point p1{ x + (xi + yi) / 2, y + (xj + yj) / 2 };
-        static Point prev = p1;
-        static bool first = true;
         if (!first) {
             writeLine(linesFile, prev, p1);
         }
         prev = p1;
         first = false;
     } else {
-        hilbert(linesFile, x, y, yi/2, yj/2, xi/2, xj/2, n-1);
-        hilbert(linesFile, x+xi/2, y+xj/2, xi/2, xj/2, yi/2, yj/2, n-1);
-        hilbert(linesFile, x+xi/2+yi/2, y+xj/2+yj/2, xi/2, xj/2, yi/2, yj/2, n-1);
-        hilbert(linesFile, x+xi/2+yi, y+xj/2+yj, -yi/2, -yj/2, -xi/2, -xj/2, n-1);
+        hilbert(linesFile, x, y, yi/2, yj/2, xi/2, xj/2, n-1, prev, first);
+        hilbert(linesFile, x+xi/2, y+xj/2, xi/2, xj/2, yi/2, yj/2, n-1, prev, first);
+        hilbert(linesFile, x+xi/2+yi/2, y+xj/2+yj/2, xi/2, xj/2, yi/2, yj/2, n-1, prev, first);
+        hilbert(linesFile, x+xi/2+yi, y+xj/2+yj, -yi/2, -yj/2, -xi/2, -xj/2, n-1, prev, first);
     }
 }
 
 void hilbertCurve(ofstream &linesFile, Point a, Point b, int levels) {
-    // set size to span between a and b (assume horizontal line)
     double size = fabs(b.x - a.x);
-    hilbert(linesFile, a.x, a.y, size, 0, 0, size, levels);
+    Point prev;
+    bool first = true;
+    hilbert(linesFile, a.x, a.y, size, 0, 0, size, levels, prev, first);
 }
 
 void sierpinski(ofstream &linesFile, Point a, Point b, Point c, int levels) {

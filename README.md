@@ -30,8 +30,37 @@ From the _Essential Algorithms: A Practical Approach to Computer Algorithms_ boo
 
 # How to compile & run you program
 
-- _You must document compilation and execution here_
-- _Don't forget to document which algorithm you're implementing_
+To compile the programm execute the following in the directory of the make file:
+
+```
+make
+```
+
+To run the program, use the following command in the terminal:
+
+```
+./<executable_name> --<curve_type> <n_levels>
+```
+
+
+Replace `<executable_name>` with the name of the compiled program, `<curve_type>` with one of the following options: `koch`, `hilbert`, or `sierpinski`, and `<n_levels>` with a non-negative integer representing the recursion depth.
+
+## Examples
+
+1. To generate a Koch curve with 3 levels:
+   ```
+   ./<executable_name> --koch 3
+   ```
+
+2. To generate a Hilbert curve with 4 levels:
+   ```
+   ./<executable_name> --hilbert 4
+   ```
+
+3. To generate a Sierpinski triangle with 2 levels:
+   ```
+   ./<executable_name> --sierpinski 2
+   ```
 
 # Grading Policy
 
